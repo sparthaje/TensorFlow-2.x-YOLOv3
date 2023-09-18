@@ -4,3 +4,6 @@ configs.py
 mnist/
 checkpoints/
 log/
+venv/
+url.secret
+roboflow

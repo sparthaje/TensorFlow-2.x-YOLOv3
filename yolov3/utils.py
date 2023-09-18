@@ -285,7 +285,7 @@ def detect_image(Yolo, image_path, output_path, input_size=416, show=False, CLAS
 
     image_data = image_preprocess(np.copy(original_image), [input_size, input_size])
     image_data = image_data[np.newaxis, ...].astype(np.float32)
-
+    start = time.time()
     if YOLO_FRAMEWORK == "tf":
         pred_bbox = Yolo.predict(image_data)
     elif YOLO_FRAMEWORK == "trt":
@@ -298,6 +298,7 @@ def detect_image(Yolo, image_path, output_path, input_size=416, show=False, CLAS
         
     pred_bbox = [tf.reshape(x, (-1, tf.shape(x)[-1])) for x in pred_bbox]
     pred_bbox = tf.concat(pred_bbox, axis=0)
+    print(f"Took {time.time() - start} seconds")
     
     bboxes = postprocess_boxes(pred_bbox, original_image, input_size, score_threshold)
     bboxes = nms(bboxes, iou_threshold, method='nms')
