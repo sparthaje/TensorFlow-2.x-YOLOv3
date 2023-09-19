@@ -168,13 +168,16 @@ def main():
 
         if TRAIN_SAVE_CHECKPOINT and not TRAIN_SAVE_BEST_ONLY:
             save_directory = os.path.join(TRAIN_CHECKPOINTS_FOLDER, TRAIN_MODEL_NAME+"_val_loss_{:7.2f}".format(total_val/count))
+            print(f"Saved model to file {save_directory}")
             yolo.save_weights(save_directory)
         if TRAIN_SAVE_BEST_ONLY and best_val_loss>total_val/count:
             save_directory = os.path.join(TRAIN_CHECKPOINTS_FOLDER, TRAIN_MODEL_NAME)
+            print(f"Saved model to file {save_directory}")
             yolo.save_weights(save_directory)
             best_val_loss = total_val/count
         if not TRAIN_SAVE_BEST_ONLY and not TRAIN_SAVE_CHECKPOINT:
             save_directory = os.path.join(TRAIN_CHECKPOINTS_FOLDER, TRAIN_MODEL_NAME)
+            print(f"Saved model to file {save_directory}")
             yolo.save_weights(save_directory)
 
     # measure mAP of trained custom model

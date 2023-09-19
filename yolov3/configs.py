@@ -35,12 +35,12 @@ if YOLO_TYPE                == "yolov3":
                                [[116, 90], [156, 198], [373, 326]]]
 # Train options
 TRAIN_YOLO_TINY             = True
-TRAIN_SAVE_BEST_ONLY        = True # saves only best model according validation loss (True recommended)
-TRAIN_SAVE_CHECKPOINT       = False # saves all best validated checkpoints in training process (may require a lot disk space) (False recommended)
-TRAIN_CLASSES               = "mnist/mnist.names"
-TRAIN_ANNOT_PATH            = "mnist/mnist_train.txt"
+TRAIN_SAVE_BEST_ONLY        = False # saves only best model according validation loss (True recommended)
+TRAIN_SAVE_CHECKPOINT       = True # saves all best validated checkpoints in training process (may require a lot disk space) (False recommended)
+TRAIN_CLASSES               = "roboflow/train/_classes.txt"
+TRAIN_ANNOT_PATH            = "roboflow/train/_annotations.txt"
 TRAIN_LOGDIR                = "log"
-TRAIN_CHECKPOINTS_FOLDER    = "checkpoints"
+TRAIN_CHECKPOINTS_FOLDER    = "roboflow/checkpoints"
 TRAIN_MODEL_NAME            = f"{YOLO_TYPE}_custom"
 TRAIN_LOAD_IMAGES_TO_RAM    = True # With True faster training, but need more RAM
 TRAIN_BATCH_SIZE            = 4
@@ -54,7 +54,7 @@ TRAIN_WARMUP_EPOCHS         = 2
 TRAIN_EPOCHS                = 100
 
 # TEST options
-TEST_ANNOT_PATH             = "mnist/mnist_test.txt"
+TEST_ANNOT_PATH             = "roboflow/test/_annotations.txt"
 TEST_BATCH_SIZE             = 4
 TEST_INPUT_SIZE             = 416
 TEST_DATA_AUG               = False

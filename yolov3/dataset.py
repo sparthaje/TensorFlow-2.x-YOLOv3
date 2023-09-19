@@ -74,7 +74,12 @@ class Dataset(object):
                     index = i
                     break
             if not os.path.exists(image_path):
-                raise KeyError("%s does not exist ... " %image_path)
+                filename = image_path
+                image_path = os.path.join(os.path.join("roboflow", "train"), filename)
+                if not os.path.exists(image_path):
+                    image_path = os.path.join(os.path.join("roboflow", "test"), filename)
+                    if not os.path.exists(image_path):
+                        raise KeyError("%s does not exist ... " %image_path)
             if TRAIN_LOAD_IMAGES_TO_RAM:
                 image = cv2.imread(image_path)
             else:
