@@ -16,14 +16,38 @@ import random
 import time
 import tensorflow as tf
 from yolov3.yolov4 import Create_Yolo
-from yolov3.utils import detect_image
+from yolov3.utils import detect_image2
 from yolov3.configs import *
 
-while True:
-    label_txt = "roboflow/test/_annotations.txt"
+label_txt = "roboflow/test/_annotations.txt"
 
-    yolo = Create_Yolo(input_size=YOLO_INPUT_SIZE, CLASSES=TRAIN_CLASSES)
-    yolo.load_weights(f"./checkpoints/yolov3_custom_Tiny") # use keras weights
-    for x in open(label_txt).readlines():
-        image_path = "roboflow/test/" + x.split(" ")[0]
-        detect_image(yolo, image_path, "mnist_test.jpg", input_size=YOLO_INPUT_SIZE, show=True, CLASSES=TRAIN_CLASSES, rectangle_colors=(255,0,0))
+yolo = Create_Yolo(input_size=YOLO_INPUT_SIZE, CLASSES=TRAIN_CLASSES)
+yolo.load_weights(f"./checkpoints/yolov3_custom_Tiny") # use keras weights
+
+total_time = 0
+total_accuracy = 0
+total = 0
+images = []
+times = []
+
+for x in open(label_txt).readlines():
+    image_path = "roboflow/test/" + x.split(" ")[0]
+    img, t, acc = detect_image2(yolo, image_path, "mnist_test.jpg", input_size=YOLO_INPUT_SIZE, show=True, CLASSES=TRAIN_CLASSES, rectangle_colors=(255,0,0))
+    total_time += t
+    total_accuracy += acc
+    total += 1
+    images.append(img)
+    times.append(t)
+
+print(total / total_time, "Hz")
+print(total_accuracy / total, "avg accuracy")
+
+
+
+for image, d in zip(images, times):
+    cv2.imshow('Image', image)
+    cv2.waitKey(int(d * 1000))
+
+    cv2.destroyWindow('Image')
+
+cv2.destroyAllWindows()
