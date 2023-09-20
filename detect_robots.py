@@ -34,7 +34,7 @@ times = []
 
 for x in open(label_txt).readlines():
     image_path = "roboflow/test/" + x.split(" ")[0]
-    output_path = "results/" + x.split(" ")[0]
+    output_path = "roboflow/results/" + x.split(" ")[0]
     try:
         img, t, acc = detect_image2(yolo, image_path, output_path, input_size=YOLO_INPUT_SIZE, show=True, CLASSES=TRAIN_CLASSES, rectangle_colors=(255,0,0))
     except:
