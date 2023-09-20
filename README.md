@@ -168,3 +168,12 @@ To be continued... (not anytime soon)
 - [ ] Generating anchors
 - [ ] YOLACT: Real-time Instance Segmentation
 - [ ] Model pruning (Pruning is a technique in deep learning that aids in the development of smaller and more efficient neural networks. It's a model optimization technique that involves eliminating unnecessary values in the weight tensor.)
+
+# For my use
+
+`python3.8 -m venv venv`
+`source venv/bin/activate`
+`pip install -r requirements.txt`
+`echo "URL" >> url.secret`
+`bash download_roboflow.sh`
+`wget -P model_data https://pjreddie.com/media/files/yolov3-tiny.weights`
