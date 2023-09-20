@@ -344,6 +344,7 @@ def detect_image2(Yolo, image_path, output_path, input_size=416, show=False, CLA
 
     image = draw_bbox(original_image, bboxes, CLASSES=CLASSES, rectangle_colors=rectangle_colors)
     # CreateXMLfile("XML_Detections", str(int(time.time())), original_image, bboxes, read_class_names(CLASSES))
+    if output_path != '': cv2.imwrite(output_path, image)
         
     return image, t, sum([x[4] for x in bboxes]) / len(bboxes)
 
@@ -486,6 +487,7 @@ def detect_video(Yolo, video_path, output_path, input_size=416, show=False, CLAS
             original_image = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             original_image = cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB)
         except:
+            print("stopping")
             break
 
         image_data = image_preprocess(np.copy(original_image), [input_size, input_size])
@@ -530,7 +532,9 @@ def detect_video(Yolo, video_path, output_path, input_size=416, show=False, CLAS
         # CreateXMLfile("XML_Detections", str(int(time.time())), original_image, bboxes, read_class_names(CLASSES))
         
         print("Time: {:.2f}ms, Detection FPS: {:.1f}, total FPS: {:.1f}".format(ms, fps, fps2))
-        if output_path != '': out.write(image)
+        if output_path != '': 
+            print(output_path)
+            out.write(image)
         if show:
             cv2.imshow('output', image)
             if cv2.waitKey(25) & 0xFF == ord("q"):
